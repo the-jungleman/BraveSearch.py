@@ -2,9 +2,6 @@ import requests
 import json
 
 class ConsumeAPI:
-    def __init__(self):
-        pass
-
     def consume_api(self, query):
         try:
             with open('config.json', 'r') as file:
