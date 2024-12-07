@@ -13,7 +13,7 @@ class ConsumeAPI:
 
             headers = {
                 "Authorization": f"Bearer {self.api_key}",
-                "x-subscription-token": self.api_key  # Adiciona o token de assinatura
+                "x-subscription-token": self.api_key
             }
 
             params = {
@@ -23,17 +23,13 @@ class ConsumeAPI:
             }
 
             url = "https://api.search.brave.com/res/v1/web/search"
-
             response = requests.get(url, params=params, headers=headers)
 
             if response.status_code == 200:
-                print(response.json()) 
+                return response.json()
             else:
                 print(f"Error: {response.status_code} - {response.text}")
+                return None
 
         except requests.exceptions.RequestException as e:
             print(f"Erro ao consumir a API: {e}")
-
-if __name__ == "__main__":
-    api = ConsumeAPI()
-    api.consume_api("brave search")
