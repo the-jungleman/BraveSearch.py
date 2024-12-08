@@ -1,5 +1,5 @@
-from ConsumeAPI import ConsumeAPI
-from    Browser import  Browser
+from src.ConsumeAPI import ConsumeAPI
+from    src.Browser import  Browser
 import tkinter as tk
 from tkinter import ttk, messagebox
 from tkinterweb import HtmlFrame

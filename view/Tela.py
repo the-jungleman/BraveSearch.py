@@ -1,7 +1,7 @@
 import tkinter as tk
 from tkinter import ttk, messagebox
 from tkinterweb import HtmlFrame
-from TelaAPI import TelaAPI
+from view.TelaAPI import TelaAPI
 
 class Tela:
     def __init__(self, root):

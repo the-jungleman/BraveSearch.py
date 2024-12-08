@@ -1,5 +1,5 @@
 import tkinter as tk
-from Tela import Tela   
+from   view.Tela import Tela   
 
 class App:
     def __init__(self):

@@ -1,4 +1,4 @@
-#!/home/ps_vitor/poo2/projetof/bin/python
+#!/home/ps_vitor/poo2/projetof/venv/bin/python3
 # -*- coding: utf-8 -*-
 import re
 import sys
