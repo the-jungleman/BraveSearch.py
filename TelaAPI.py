@@ -1,19 +1,22 @@
 from ConsumeAPI import ConsumeAPI
+from    Browser import  Browser
 import tkinter as tk
 from tkinter import ttk, messagebox
 from tkinterweb import HtmlFrame
-import requests
 import json
 
 class TelaAPI:
     def __init__(self, tela):
-        self.tela = tela  # Recebe a instância de Tela
-        self.data_list = []  # Lista para armazenar os resultados
+        self.data_list = []
+        self.tela = tela
+        self.browser = Browser()
+    
+    def open_url(self, url):
+        self.browser.open_url(url, self.tela)
 
     def search(self):
         search = self.tela.query_entry.get()
 
-        # Limpa widgets antigos
         for widget in self.tela.results_frame.winfo_children():
             widget.destroy()
 
@@ -32,15 +35,22 @@ class TelaAPI:
 
     def insert_button(self, result):
         try:
-            title = result['title']
-            url = result['url']
+            title = result['title']  # Obtém o título do resultado
+            url = result['url']  # Obtém a URL do resultado
 
-            button = tk.Button(self.tela.results_frame, text=title, command=lambda: self.open_url(url))
+            button = tk.Button(
+                self.tela.results_frame,  # Adiciona o botão ao frame de resultados
+                text=title,
+                command=lambda: self.browser.open_url(self.tela, url)  # Passa tela e URL
+            )
             button.pack(fill='x', pady=5)
 
-            self.data_list.append({'title': title, 'url': url})
+            # Armazena os dados na lista para exportação
+            self.tela.data_list.append({'title': title, 'url': url})
+
         except KeyError as e:
             print(f"Chave {e} não encontrada")
+
 
     def open_url(self, url):
         try:
@@ -56,17 +66,18 @@ class TelaAPI:
             messagebox.showerror("Erro", f"Erro ao acessar a página: {e}")
 
     def export_to_json(self):
-        if not self.data_list:
-            messagebox.showerror("Erro", "Nenhum dado disponível para exportar.")
-            return
+        # if not self.data_list:
+            # messagebox.showerror("Erro", "Nenhum dado disponível para exportar.")
+            # return
 
         filename = "searchresults.json"
         try:
             with open(filename, "w", encoding="utf-8") as file:
                 json.dump(self.data_list, file, ensure_ascii=False, indent=4)
-            messagebox.showinfo("Sucesso", f"Dados exportados para {filename}")
+            # messagebox.showinfo("Sucesso", f"Dados exportados para {filename}")
         except Exception as e:
-            messagebox.showerror("Erro", f"Não foi possível exportar os dados: {e}")
+            # messagebox.showerror("Erro", f"Não foi possível exportar os dados: {e}")
+            print(f"Erro ao exportar dados: {e}")
 
     def command_search_button(self):
         self.search()

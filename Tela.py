@@ -27,7 +27,8 @@ class Tela:
 
         self.data_list = []
 
-        # Cria a instância de TelaAPI e passa `self` (a própria instância de Tela)
         self.tela_api = TelaAPI(self)
 
-        
+    def search(self):
+        query = self.query_entry.get()
+        self.tela_api.search(query)
