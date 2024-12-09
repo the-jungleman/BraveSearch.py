@@ -35,21 +35,22 @@ class TelaAPI:
 
     def insert_button(self, result):
         try:
-            title = result['title']  # Obtém o título do resultado
-            url = result['url']  # Obtém a URL do resultado
+            title = result['title']
+            url = result['url']
 
+            self.tela.data_list.append({'title': title, 'url': url})
+            print(f"Dado inserido: {title} - {url}") 
+            
             button = tk.Button(
-                self.tela.results_frame,  # Adiciona o botão ao frame de resultados
+                self.tela.results_frame,
                 text=title,
-                command=lambda: self.browser.open_url(self.tela, url)  # Passa tela e URL
+                command=lambda: self.browser.open_url(self.tela, url)
             )
             button.pack(fill='x', pady=5)
 
-            # Armazena os dados na lista para exportação
-            self.tela.data_list.append({'title': title, 'url': url})
-
         except KeyError as e:
             print(f"Chave {e} não encontrada")
+
 
 
     def open_url(self, url):
@@ -66,17 +67,12 @@ class TelaAPI:
             messagebox.showerror("Erro", f"Erro ao acessar a página: {e}")
 
     def export_to_json(self):
-        # if not self.data_list:
-            # messagebox.showerror("Erro", "Nenhum dado disponível para exportar.")
-            # return
-
         filename = "searchresults.json"
         try:
             with open(filename, "w", encoding="utf-8") as file:
-                json.dump(self.data_list, file, ensure_ascii=False, indent=4)
-            # messagebox.showinfo("Sucesso", f"Dados exportados para {filename}")
+                json.dump(self.tela.data_list, file, ensure_ascii=False, indent=4)
+            print(f"Dados exportados para {filename}")
         except Exception as e:
-            # messagebox.showerror("Erro", f"Não foi possível exportar os dados: {e}")
             print(f"Erro ao exportar dados: {e}")
 
     def command_search_button(self):
